@@ -3,9 +3,9 @@ using NZWalk.API.Models.Domain;
 
 namespace NZWalk.API.Data
 {
-    public class NZWalkDbContext : DbContext
+    public class NZWalksDbContext : DbContext
     {
-        public NZWalkDbContext(DbContextOptions options) : base(options) { }
+        public NZWalksDbContext(DbContextOptions<NZWalksDbContext> options) : base(options) { }
         public DbSet<Difficulty> Difficulties { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }

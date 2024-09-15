@@ -6,17 +6,17 @@ namespace NZWalk.API.Repositories
 {
     public class SQLWalkRepository : IWalkRepository
     {
-        private readonly NZWalkDbContext dbContext;
+        private readonly NZWalksDbContext dbContext;
 
-        public SQLWalkRepository(NZWalkDbContext dbContext)
+        public SQLWalkRepository(NZWalksDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-        public async Task<List<Walk>> GetAll(string? filterOn = null, string? filterQuery = null,
+
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
             string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
             var walks = dbContext.Walks.Include("Region").Include("Difficulty").AsQueryable();
-
             // Filtering
             if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
             {

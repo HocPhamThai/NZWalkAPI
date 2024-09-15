@@ -6,26 +6,22 @@ namespace NZWalk.API.Repositories
 {
     public class SQLRegionRepository : IRegionRepository
     {
-        private readonly NZWalkDbContext dbContext;
+        private readonly NZWalksDbContext dbContext;
 
-        public SQLRegionRepository(NZWalkDbContext dbContext)
+        public SQLRegionRepository(NZWalksDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
         public async Task<List<Region>> GetAllAsync()
         {
-           return await dbContext.Regions.ToListAsync();    
+            return await dbContext.Regions.ToListAsync();
         }
 
         public async Task<Region?> GetByIdAsync(Guid id)
         {
             // check if existing
             var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (region == null)
-            {
-                return null;
-            }
             return region;
         }
 
@@ -40,7 +36,7 @@ namespace NZWalk.API.Repositories
         {
             // check if existing Region
             var existingRegion = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (existingRegion == null) 
+            if (existingRegion == null)
             {
                 return null;
             }
@@ -54,8 +50,8 @@ namespace NZWalk.API.Repositories
         public async Task<Region?> DeleteAsync(Guid id)
         {
             var existingRegion = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (existingRegion == null) 
-            { 
+            if (existingRegion == null)
+            {
                 return null;
             }
             dbContext.Regions.Remove(existingRegion);
