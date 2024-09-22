@@ -28,9 +28,9 @@ namespace NZWalk.API.Controllers
                 var imageDomainModel = new Image()
                 {
                     File = request.File,
-                    FileName = request.File.FileName,
+                    FileName = request.FileName,
                     FileDescription = request.FileDescription,
-                    FileExtension = Path.GetExtension(request.FileName),
+                    FileExtension = Path.GetExtension(request.File.FileName),
                     FileSizeInBytes = request.File.Length,
                 };
 
