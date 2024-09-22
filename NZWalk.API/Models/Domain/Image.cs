@@ -12,6 +12,5 @@ namespace NZWalk.API.Models.Domain
         public string FileExtension { get; set; }
         public long FileSizeInBytes { get; set; }
         public string FilePath { get; set; }
-
     }
 }
