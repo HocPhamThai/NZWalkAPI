@@ -18,40 +18,53 @@ namespace NZWalk.API.Controllers
         private readonly NZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository
+            , IMapper mapper
+            , ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         // Get all regions
         // https://localhost:portnumber/api/regions
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            // Get Regions from Database - Domain Model
-            var regionsDomainModel = await regionRepository.GetAllAsync();
+            try
+            {
+                throw new Exception("This is a custom exception");
+                // Get Regions from Database - Domain Model
+                var regionsDomainModel = await regionRepository.GetAllAsync();
 
-            // Mapping Domain Model to DTO
-            //var regionsDto = new List<RegionDto>();
-            //foreach(var region in regionsDomain)
-            //{
-            //    regionsDto.Add(new RegionDto()
-            //    {
-            //        Id = region.Id,
-            //        Code = region.Code,
-            //        Name = region.Name,
-            //        RegionImageUrl = region.RegionImageUrl
-            //    });   
-            //}
+                // Mapping Domain Model to DTO
+                //var regionsDto = new List<RegionDto>();
+                //foreach(var region in regionsDomain)
+                //{
+                //    regionsDto.Add(new RegionDto()
+                //    {
+                //        Id = region.Id,
+                //        Code = region.Code,
+                //        Name = region.Name,
+                //        RegionImageUrl = region.RegionImageUrl
+                //    });   
+                //}
 
-            var regionsDto = mapper.Map<List<RegionDto>>(regionsDomainModel);
+                var regionsDto = mapper.Map<List<RegionDto>>(regionsDomainModel);
 
-            // return DTOs
-            return Ok(regionsDto);
+                // return DTOs
+                return Ok(regionsDto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                throw;
+            }
         }
 
         // Get a region by id
